@@ -51,7 +51,7 @@ on property:twrp.modules.loaded=true
     start vibratorfeature-hal-service
     umount /firmware
 
-service kernelsu /system/bin/kernelsu.sh
+service modules_mount /system/bin/modules_mount.sh
     user root
     group root
     disabled
@@ -59,4 +59,4 @@ service kernelsu /system/bin/kernelsu.sh
     seclabel u:r:recovery:s0
 
 on property:twrp.decrypt.done=true
-    start kernelsu
+    start modules_mount

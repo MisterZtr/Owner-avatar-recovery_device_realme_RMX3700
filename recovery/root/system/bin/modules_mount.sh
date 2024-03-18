@@ -4,3 +4,8 @@ if [ -f "/data/adb/ksu/modules.img" ]; then
   resize2fs -M /data/adb/ksu/modules.img;
   mount -t auto -o loop /data/adb/ksu/modules.img /data/adb/modules;
 fi;
+
+if [ -f "/data/adb/ap/modules.img" ]; then
+  e2fsck -fy /data/adb/ap/modules.img;
+  mount -t auto -o loop /data/adb/ap/modules.img /data/adb/modules;
+fi;
