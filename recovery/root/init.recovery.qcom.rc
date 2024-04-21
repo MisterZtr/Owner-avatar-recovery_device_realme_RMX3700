@@ -59,6 +59,4 @@ service modules_mount /system/bin/modules_mount.sh
     seclabel u:r:recovery:s0
 
 on property:twrp.decrypt.done=true
-    mkdir /data/adb/ksu-modules
-    mkdir /data/adb/ap-modules
     start modules_mount
