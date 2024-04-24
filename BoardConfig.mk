@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # SDK
-BOARD_SYSTEMSDK_VERSIONS := 31
+BOARD_SYSTEMSDK_VERSIONS := 32
 
 # Architecture
 TARGET_ARCH := arm64
