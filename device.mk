@@ -30,25 +30,24 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 # more partitions to this list for the bootloader and radio.
 AB_OTA_PARTITIONS ?= boot vendor_boot recovery vendor_dlkm dtbo vbmeta
 
-# A/B related packages
-PRODUCT_PACKAGES += update_engine \
-    update_engine_client \
-    update_verifier \
+# Build bootctl
+PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl-qti \
     android.hardware.boot@1.2-impl-qti.recovery \
-    android.hardware.boot@1.2-service
+    android.hardware.boot@1.2-service \
+    bootctl
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(DEVICE_PATH)
-
-# Build bootctl
-PRODUCT_PACKAGES += \
-        bootctl
+        
 RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/bootctl
 
 PRODUCT_PACKAGES += \
-  update_engine_sideload
+  update_engine_sideload \
+  update_engine \
+  update_verifier \
+  update_engine_client
 
 # f2fs utilities
 PRODUCT_PACKAGES += \
@@ -58,13 +57,20 @@ PRODUCT_PACKAGES += \
 
 # Userdata checkpoint
 PRODUCT_PACKAGES += \
-    checkpoint_gc
+    checkpoint_gc \
+    otapreopt_script
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_vendor=true \
     POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
     FILESYSTEM_TYPE_vendor=ext4 \
     POSTINSTALL_OPTIONAL_vendor=true
+
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_system=true \
+    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
+    FILESYSTEM_TYPE_system=erofs \
+    POSTINSTALL_OPTIONAL_system=true
 
 # Set GRF/Vendor freeze properties
 BOARD_SHIPPING_API_LEVEL := 32
