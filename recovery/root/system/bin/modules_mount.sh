@@ -3,7 +3,9 @@
 # Если modules.img есть только в ksu
 if [ -f "/data/adb/ksu/modules.img" ] && [ ! -f "/data/adb/ap/modules.img" ]; then
   e2fsck -fy /data/adb/ksu/modules.img
-  resize2fs -M /data/adb/ksu/modules.img
+  size=$(du -m /data/adb/ksu/modules.img | awk '{print $1}')
+  let "rsize = $size + 100"
+  resize2fs /data/adb/ksu/modules.img "$rsize"m
   mount -t auto -o loop /data/adb/ksu/modules.img /data/adb/modules
 
 # Если modules.img есть в ap
@@ -17,9 +19,11 @@ elif [ -f "/data/adb/ksu/modules.img" ] && [ -f "/data/adb/ap/modules.img" ]; th
   mkdir /data/adb/ksu-modules
   mkdir /data/adb/ap-modules
 
-  e2fsck -fy /data/adb/ksu/modules.img
   e2fsck -fy /data/adb/ap/modules.img
-  resize2fs -M /data/adb/ksu/modules.img
+  e2fsck -fy /data/adb/ksu/modules.img
+  size=$(du -m /data/adb/ksu/modules.img | awk '{print $1}')
+  let "rsize = $size + 100"
+  resize2fs /data/adb/ksu/modules.img "$rsize"m
   mount -t auto -o loop /data/adb/ksu/modules.img /data/adb/ksu-modules
   mount -t auto -o loop /data/adb/ap/modules.img /data/adb/ap-modules
 
