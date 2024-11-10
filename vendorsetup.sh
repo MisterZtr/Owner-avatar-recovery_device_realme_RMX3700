@@ -27,6 +27,7 @@
 	export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 	export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 	export FOX_DELETE_INITD_ADDON=1
+	export FOX_USE_UPDATED_MAGISKBOOT=1
 
 	#OFR binary files
 	export FOX_REPLACE_BUSYBOX_PS=1
